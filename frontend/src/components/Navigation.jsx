@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X, Plus, Minus } from 'lucide-react';
+import { ChevronDown, Menu, X, Plus, Minus, Home as HomeIcon } from 'lucide-react';
 import logo from '../assets/logo/IITM_LOGO.png';
 
 // Structured Navigation Data Configuration
@@ -277,12 +277,12 @@ const Navigation = () => {
     const colCount = Math.min(navItem.groups.length, 4);
     
     return (
-      <div className={`absolute top-full left-1/2 -translate-x-1/2 bg-white border border-[#e5e7eb] shadow-lg rounded-md transition-all duration-200 origin-top z-50 overflow-hidden ${isActive ? 'opacity-100 visible scale-y-100 translate-y-0' : 'opacity-0 invisible scale-y-95 pointer-events-none -translate-y-2'}`}>
+      <div className={`absolute top-[80px] left-1/2 -translate-x-1/2 bg-white border border-[#e5e7eb] shadow-lg rounded-b-md transition-all duration-200 origin-top z-50 overflow-hidden w-full max-w-max sm:max-w-[calc(100vw-3rem)] ${isActive ? 'opacity-100 visible scale-y-100 translate-y-0' : 'opacity-0 invisible scale-y-95 pointer-events-none -translate-y-2'}`}>
         
         {/* Strict Grid Layout for Academic Density */}
         <div 
-          className="grid gap-x-10 gap-y-8 py-8 px-10"
-          style={{ gridTemplateColumns: `repeat(${colCount}, minmax(200px, 1fr))` }}
+          className="grid gap-x-8 gap-y-8 py-8 px-10"
+          style={{ gridTemplateColumns: `repeat(${colCount}, minmax(180px, 1fr))` }}
         >
           {navItem.groups.map((group, groupIndex) => (
             <div key={groupIndex} className="flex flex-col gap-3">
@@ -296,7 +296,7 @@ const Navigation = () => {
                   <li key={linkIndex}>
                     <Link 
                       to={link.to} 
-                      className="inline-block text-[#4b5563] text-[15px] hover:text-[#b45309] transition-colors duration-200"
+                      className="block text-[#4b5563] text-[15px] hover:text-[#b45309] transition-colors duration-200 break-words leading-snug py-1"
                     >
                       {link.label}
                     </Link>
@@ -333,32 +333,34 @@ const Navigation = () => {
           {isOpen ? <Minus size={18} className="text-[#4b5563]" /> : <Plus size={18} className="text-[#4b5563]" />}
         </button>
         
-        <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[1000px] pb-5' : 'max-h-0'}`}>
-           <div className="px-6 space-y-6">
-             {navItem.path && (
-               <Link to={navItem.path} className="block text-[#b45309] font-semibold text-sm pt-2">
-                 {navItem.title} Overview &rarr;
-               </Link>
-             )}
-             
-             {navItem.groups.map((group, index) => (
-                <div key={index} className="space-y-3">
-                  {group.heading && (
-                    <div className="text-xs font-bold text-[#4b5563] uppercase tracking-wider pb-1">
-                      {group.heading}
-                    </div>
-                  )}
-                  <ul className="space-y-4">
-                    {group.links.map((link, linkIndex) => (
-                      <li key={linkIndex}>
-                        <Link to={link.to} className="block text-[#4b5563] text-sm hover:text-[#b45309] transition-colors">
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-             ))}
+        <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+           <div className="overflow-hidden">
+             <div className="px-6 space-y-6 pb-5 pt-1">
+               {navItem.path && (
+                 <Link to={navItem.path} className="block text-[#b45309] font-semibold text-sm">
+                   {navItem.title} Overview &rarr;
+                 </Link>
+               )}
+               
+               {navItem.groups.map((group, index) => (
+                  <div key={index} className="space-y-3">
+                    {group.heading && (
+                      <div className="text-xs font-bold text-[#4b5563] uppercase tracking-wider pb-1">
+                        {group.heading}
+                      </div>
+                    )}
+                    <ul className="space-y-4">
+                      {group.links.map((link, linkIndex) => (
+                        <li key={linkIndex}>
+                          <Link to={link.to} className="block text-[#4b5563] text-sm hover:text-[#b45309] transition-colors leading-relaxed">
+                            {link.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+               ))}
+             </div>
            </div>
         </div>
       </div>
@@ -371,13 +373,17 @@ const Navigation = () => {
         
         {/* Header Bar */}
         <div className="flex items-center justify-between h-20">
-           {/* Logo Image */}
-           <Link to="/" className="flex items-center gap-3">
+           {/* Logo Image & Text */}
+           <Link to="/" className="flex items-center gap-4">
              <img 
                src={logo} 
                alt="IIT Madras Chemistry Department"
-               className="h-[48px] w-auto object-contain"
+               className="h-[52px] w-auto object-contain"
              />
+             <div className="flex flex-col justify-center hidden sm:flex">
+               <span className="text-[17px] font-bold text-[#1f2937] leading-tight tracking-tight">Department of Chemistry</span>
+               <span className="text-[13px] font-semibold text-[#b45309] leading-tight tracking-wide uppercase mt-0.5">IIT Madras</span>
+             </div>
            </Link>
            
            {/* Mobile Menu Toggle Button */}
@@ -395,9 +401,10 @@ const Navigation = () => {
             
             <Link 
               to="/" 
-              className="inline-flex items-center font-medium text-[15px] py-7 px-4 text-[#1f2937] hover:text-[#b45309] transition-colors duration-150"
+              className="inline-flex items-center justify-center h-10 w-10 rounded text-[#4b5563] hover:text-[#b45309] hover:bg-[#f5f6f8] transition-colors duration-150"
+              aria-label="Home"
             >
-              Home
+              <HomeIcon size={20} />
             </Link>
 
             {/* Loop through strictly structured JSON to build Nav */}
@@ -406,7 +413,7 @@ const Navigation = () => {
               return (
                 <div 
                   key={navItem.title}
-                  className="h-full static xl:relative group" /* Static on lg allows mega menu to align center of screen, relative on xl aligns below button */
+                  className="h-full static group" /* Static always to center mega menu against viewport properly */
                   onMouseEnter={() => handleMouseEnter(navItem.title)}
                   onMouseLeave={handleMouseLeave}
                 >

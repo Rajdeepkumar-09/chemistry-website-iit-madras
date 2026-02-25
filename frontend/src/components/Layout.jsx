@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Navigation from './Navigation';
+import logo from '../assets/logo/IITM_LOGO.png';
 
 const Layout = () => {
   return (
@@ -14,17 +15,20 @@ const Layout = () => {
       </main>
       
       {/* Structured Institutional Footer */}
-      <footer className="bg-white border-t border-[#e5e7eb] py-14 mt-auto">
-        <div className="container mx-auto px-4 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+      <footer className="bg-[#eef1f4] border-t border-[#e5e7eb] py-14 mt-auto">
+        <div className="container mx-auto px-6 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-10 text-center md:text-left">
           
-          <div>
-            <div className="text-[#1f2937] font-bold text-xl mb-1 flex items-center justify-center md:justify-start gap-3 tracking-tight">
-              Department of Chemistry
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <img src={logo} alt="IIT Madras Logo" className="h-16 w-auto object-contain mix-blend-darken opacity-90" />
+            <div>
+              <div className="text-[#1f2937] font-bold text-xl mb-1 tracking-tight">
+                Department of Chemistry
+              </div>
+              <p className="text-sm text-[#4b5563] max-w-sm leading-relaxed mt-2">
+                Indian Institute of Technology Madras<br />
+                Chennai 600036, Tamil Nadu, India
+              </p>
             </div>
-            <p className="text-sm text-[#4b5563] max-w-sm leading-relaxed mt-2">
-              Indian Institute of Technology Madras<br />
-              Chennai 600036, Tamil Nadu, India
-            </p>
           </div>
 
           <div className="text-sm text-[#4b5563] flex flex-col items-center md:items-end">
