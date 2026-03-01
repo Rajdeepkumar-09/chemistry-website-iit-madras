@@ -10,9 +10,9 @@ const NAVIGATION_DATA = [
     title: 'About',
     path: '/about',
     groups: [
-       { heading: null, links: [{ label: 'Overview', to: '/about/overview' }, { label: 'Message From Head', to: '/about/message-from-head' }, { label: 'Vision & Mission', to: '/about/vision-mission' }, { label: 'Achievements', to: '/about/achievements' }, { label: 'Rankings', to: '/about/rankings' }, { label: 'History', to: '/about/history' }] },
-       { heading: 'Administration', links: [{ label: 'Advisory Board', to: '/about/advisory-board' }, { label: 'Committees', to: '/about/committees' }, { label: 'Annual Reports', to: '/about/annual-reports' }] },
-       { heading: 'IITM Specific', links: [{ label: 'Industry Partnerships', to: '/about/industry-partnerships' }, { label: 'Research Park Link', to: '/about/research-park-link' }] }
+      { heading: null, links: [{ label: 'Overview', to: '/about/overview' }, { label: 'Message From Head', to: '/about/message-from-head' }, { label: 'Vision & Mission', to: '/about/vision-mission' }, { label: 'Achievements', to: '/about/achievements' }, { label: 'Rankings', to: '/about/rankings' }, { label: 'History', to: '/about/history' }] },
+      { heading: 'Administration', links: [{ label: 'Advisory Board', to: '/about/advisory-board' }, { label: 'Committees', to: '/about/committees' }, { label: 'Annual Reports', to: '/about/annual-reports' }] },
+      { heading: 'IITM Specific', links: [{ label: 'Industry Partnerships', to: '/about/industry-partnerships' }, { label: 'Research Park Link', to: '/about/research-park-link' }] }
     ]
   },
   {
@@ -76,7 +76,7 @@ const checkIsActiveRoute = (navItem, currentPath) => {
 const NavButton = ({ title, isActive, isCurrentPage }) => {
   const isVisuallyActive = isActive || isCurrentPage;
   return (
-    <button 
+    <button
       className={`relative inline-flex items-center font-medium text-[14px] h-full px-4 border-none bg-transparent cursor-pointer transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-inset rounded-md ${isVisuallyActive ? 'text-orange-700' : 'text-[#4b5563] hover:text-orange-700'}`}
       aria-expanded={isActive} aria-haspopup="menu"
     >
@@ -95,22 +95,22 @@ const MegaMenu = ({ navItem, isActive, isScrolled, currentPath }) => {
             {group.heading && <div className="text-[11px] font-bold text-[#9ca3af] uppercase tracking-wider mb-1">{group.heading}</div>}
             <ul className="flex flex-col gap-1 m-0 p-0 list-none">
               {group.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <Link to={link.to} className={`block px-3 py-2 -mx-3 rounded-lg text-[14px] font-medium transition-all duration-200 hover:translate-x-1 whitespace-normal break-words leading-snug focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 ${currentPath === link.to ? 'bg-orange-50 text-orange-800 font-semibold' : 'text-[#4b5563] hover:bg-orange-50 hover:text-orange-800'}`} role="menuitem">
-                      {link.label}
-                    </Link>
-                  </li>
+                <li key={linkIndex}>
+                  <Link to={link.to} className={`block px-3 py-2 -mx-3 rounded-lg text-[14px] font-medium transition-all duration-200 hover:translate-x-1 whitespace-normal break-words leading-snug focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 ${currentPath === link.to ? 'bg-orange-50 text-orange-800 font-semibold' : 'text-[#4b5563] hover:bg-orange-50 hover:text-orange-800'}`} role="menuitem">
+                    {link.label}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
         ))}
       </div>
       {navItem.path && (
-         <div className="bg-gradient-to-r from-orange-50/80 to-transparent border-t border-orange-100/50 px-10 py-4 flex justify-end">
-           <Link to={navItem.path} className="text-[13px] font-semibold text-orange-700 hover:text-orange-900 transition-colors flex items-center gap-1 group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 rounded-sm">
-             Go to {navItem.title} Overview <span className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true">&rarr;</span>
-           </Link>
-         </div>
+        <div className="bg-gradient-to-r from-orange-50/80 to-transparent border-t border-orange-100/50 px-10 py-4 flex justify-end">
+          <Link to={navItem.path} className="text-[13px] font-semibold text-orange-700 hover:text-orange-900 transition-colors flex items-center gap-1 group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 rounded-sm">
+            Go to {navItem.title} Overview <span className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
       )}
     </div>
   );
@@ -118,7 +118,7 @@ const MegaMenu = ({ navItem, isActive, isScrolled, currentPath }) => {
 
 const MobileAccordion = ({ navItem, isOpen, toggleMobileAccordion, currentPath, closeMenu }) => {
   const isCurrentPage = checkIsActiveRoute(navItem, currentPath);
-  
+
   return (
     <div className="border-b border-slate-100">
       <button onClick={() => toggleMobileAccordion(navItem.title)} className={`w-full flex items-center justify-between py-4 px-6 text-left font-semibold focus:outline-none transition-colors ${isOpen || isCurrentPage ? 'text-orange-700' : 'text-[#1f2937]'}`}>
@@ -136,18 +136,18 @@ const MobileAccordion = ({ navItem, isOpen, toggleMobileAccordion, currentPath, 
                 </Link>
               )}
               {navItem.groups.map((group, index) => (
-                  <div key={index} className="space-y-3">
-                    {group.heading && <div className="text-[11px] font-bold text-[#6b7280] uppercase tracking-wider pb-1">{group.heading}</div>}
-                    <ul className="space-y-3">
-                      {group.links.map((link, linkIndex) => (
-                          <li key={linkIndex}>
-                            <Link to={link.to} onClick={closeMenu} className={`block text-sm transition-colors leading-relaxed ${currentPath === link.to ? 'text-orange-700 font-medium' : 'text-[#4b5563] hover:text-orange-700'}`}>
-                              {link.label}
-                            </Link>
-                          </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div key={index} className="space-y-3">
+                  {group.heading && <div className="text-[11px] font-bold text-[#6b7280] uppercase tracking-wider pb-1">{group.heading}</div>}
+                  <ul className="space-y-3">
+                    {group.links.map((link, linkIndex) => (
+                      <li key={linkIndex}>
+                        <Link to={link.to} onClick={closeMenu} className={`block text-sm transition-colors leading-relaxed ${currentPath === link.to ? 'text-orange-700 font-medium' : 'text-[#4b5563] hover:text-orange-700'}`}>
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -191,18 +191,18 @@ const Navigation = () => {
 
   return (
     <nav className={`fixed w-full top-0 z-[1000] transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.06)] border-transparent' : 'bg-white/80 backdrop-blur-sm border-b border-black/5'}`}>
-      
+
       <div className="container mx-auto px-6 max-w-7xl">
         <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-16' : 'h-20'}`}>
-           <Link to="/" className="flex items-center gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded-lg">
-             <img src={logo} alt="IIT Madras Chemistry Department" className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-[42px]' : 'h-[52px]'}`} />
-             <div className="flex-col justify-center hidden sm:flex">
-               <span className="text-[17px] font-bold text-[#1f2937] group-hover:text-orange-700 transition-colors leading-tight tracking-tight">Department of Chemistry</span>
-               <span className="text-[13px] font-semibold text-[#4b5563] leading-tight tracking-wide uppercase mt-0.5">IIT Madras</span>
-             </div>
-           </Link>
-           
-           <button 
+          <Link to="/" className="flex items-center gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded-lg">
+            <img src={logo} alt="IIT Madras Chemistry Department" className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-[42px]' : 'h-[52px]'}`} />
+            <div className="flex-col justify-center hidden sm:flex">
+              <span className="text-[17px] font-bold text-[#1f2937] group-hover:text-orange-700 transition-colors leading-tight tracking-tight">Department of Chemistry</span>
+              <span className="text-[13px] font-semibold text-[#4b5563] leading-tight tracking-wide uppercase mt-0.5">IIT Madras</span>
+            </div>
+          </Link>
+
+          <button
             type="button"
             className="lg:hidden p-2 text-[#4b5563] hover:text-orange-700 hover:bg-orange-50 rounded-lg transition-colors focus:outline-none"
             onClick={() => setIsMobileMenuOpen(true)}
@@ -217,10 +217,10 @@ const Navigation = () => {
                 <HomeIcon size={20} />
               </Link>
               {NAVIGATION_DATA.map((navItem) => (
-                  <div key={navItem.title} className="h-full static group" onMouseEnter={() => handleMouseEnter(navItem.title)} onMouseLeave={handleMouseLeave}>
-                    <NavButton title={navItem.title} isActive={activeDropdown === navItem.title} isCurrentPage={checkIsActiveRoute(navItem, location.pathname)} />
-                    <MegaMenu navItem={navItem} isActive={activeDropdown === navItem.title} isScrolled={isScrolled} currentPath={location.pathname} />
-                  </div>
+                <div key={navItem.title} className="h-full static group" onMouseEnter={() => handleMouseEnter(navItem.title)} onMouseLeave={handleMouseLeave}>
+                  <NavButton title={navItem.title} isActive={activeDropdown === navItem.title} isCurrentPage={checkIsActiveRoute(navItem, location.pathname)} />
+                  <MegaMenu navItem={navItem} isActive={activeDropdown === navItem.title} isScrolled={isScrolled} currentPath={location.pathname} />
+                </div>
               ))}
             </div>
           </div>
@@ -233,10 +233,10 @@ const Navigation = () => {
           <motion.div key="mobile-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] lg:hidden" onClick={closeMobileMenu} />
         )}
       </AnimatePresence>
-      
+
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             key="mobile-drawer"
             initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl flex flex-col h-[100dvh] z-[2001] lg:hidden border-l border-slate-200"
@@ -253,9 +253,9 @@ const Navigation = () => {
                 Home
               </Link>
               {NAVIGATION_DATA.map((navItem) => (
-                <MobileAccordion 
-                  key={navItem.title} 
-                  navItem={navItem} 
+                <MobileAccordion
+                  key={navItem.title}
+                  navItem={navItem}
                   isOpen={openMobileAccordion === navItem.title}
                   toggleMobileAccordion={(title) => setOpenMobileAccordion(openMobileAccordion === title ? null : title)}
                   currentPath={location.pathname}
