@@ -23,6 +23,16 @@ body,
   font-family: 'Inter', 'Roboto', ui-sans-serif, system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip; /* <--- CHANGED THIS LINE */
 }
 
+/* Ken Burns zoom effect for hero slider images */
+@keyframes kenburns {
+  0% {
+    transform: scale(1);
+  }
 
+  100% {
+    transform: scale(1.08);
+  }
+}

@@ -21,16 +21,19 @@ const mechanicalReveal = {
 
 // --- Images for the Auto-Slider ---
 const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80", 
+  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80",
   "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=80",
   "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1920&q=80"
 ];
 
-// --- Dummy Data for Announcements ---
+// --- Data for Announcements ---
 const ANNOUNCEMENTS = [
   { id: 1, date: "Mar 15, 2026", tag: "Admissions", title: "PhD Admissions Open for Fall 2026 Semester", link: "/admissions/phd" },
   { id: 2, date: "Mar 10, 2026", tag: "Event", title: "International Conference on Catalysis & Energy Systems", link: "/seminars/upcoming" },
   { id: 3, date: "Mar 02, 2026", tag: "Research", title: "Prof. Sharma's Lab publishes breakthrough in Nature Chemistry", link: "/research/publications" },
+  { id: 4, date: "Feb 25, 2026", tag: "Workshop", title: "Hands-on Workshop: Advanced NMR Techniques for Organic Chemists", link: "/seminars/upcoming" },
+  { id: 5, date: "Feb 18, 2026", tag: "Achievement", title: "Department ranks #1 in NIRF Chemistry Rankings 2026", link: "/about/overview" },
+  { id: 6, date: "Feb 10, 2026", tag: "Seminar", title: "Distinguished Lecture Series: Nobel Laureate Prof. Ben Feringa", link: "/seminars/upcoming" },
 ];
 
 // --- Interactive Spotlight Card for Core Domains ---
@@ -47,6 +50,7 @@ const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
   return (
     <motion.div
       variants={slowReveal}
+      ref={divRef}
       onMouseMove={handleMouseMove}
       // ENHANCED SHADOW: Added shadow-xl shadow-slate-200/60 for a deep, floating base shadow
       className="group cursor-default bg-white/80 backdrop-blur-2xl p-8 border border-slate-200/60 shadow-xl shadow-slate-200/60 transition-all duration-300 flex flex-col h-full rounded-3xl relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(180,83,9,0.15)] hover:border-orange-200"
@@ -64,7 +68,8 @@ const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
           `,
         }}
       />
-
+      
+      {/* Card Content */}
       <div className="relative z-10 flex flex-col h-full">
         <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-50 text-slate-400 group-hover:bg-orange-50 group-hover:text-[#b45309] transition-all duration-300 group-hover:scale-110 origin-left border border-slate-100 group-hover:border-orange-100 shadow-sm">
           <Icon size={26} strokeWidth={1.5} />
@@ -79,6 +84,7 @@ const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
   );
 };
 
+// --- Main Page Component ---
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { scrollYProgress } = useScroll();
@@ -141,7 +147,7 @@ const Home = () => {
             <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="text-lg md:text-xl font-medium text-[#4b5563] max-w-2xl leading-relaxed mb-10 drop-shadow-sm">
               Pioneering research, world-class education, and interdisciplinary innovation in chemical sciences at India's premier institute.
             </motion.p>
-            
+
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 1.2 }} className="flex flex-col sm:flex-row gap-4">
                {/* Animated Primary Button */}
                <Link to="/about/overview" className="group relative inline-flex items-center justify-center px-8 py-4 bg-[#1f2937] text-white font-semibold rounded-xl border border-[#1f2937] shadow-lg shadow-slate-300/50 hover:bg-white hover:text-[#b45309] hover:border-[#b45309] hover:shadow-[0_8px_20px_rgba(180,83,9,0.15)] transition-all duration-300 overflow-hidden text-[15px] min-w-[180px]">
@@ -177,19 +183,19 @@ const Home = () => {
             <div className="absolute inset-0 bg-white/40 backdrop-blur-2xl border border-white/60 shadow-2xl shadow-slate-300/40 rounded-3xl overflow-hidden p-2 flex flex-col pointer-events-none">
               <div className="flex-1 w-full rounded-2xl overflow-hidden relative isolate">
                 {HERO_IMAGES.map((img, idx) => (
-                   <div 
-                     key={idx}
-                     className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out ${idx === currentSlide ? 'opacity-100' : 'opacity-0'}`}
-                     style={{ backgroundImage: `url(${img})` }}
-                   >
-                     <div className="absolute inset-0 bg-black/10 mix-blend-multiply"></div>
-                   </div>
+                  <div
+                    key={idx}
+                    className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out ${idx === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+                    style={{ backgroundImage: `url(${img})` }}
+                  >
+                    <div className="absolute inset-0 bg-black/10 mix-blend-multiply"></div>
+                  </div>
                 ))}
               </div>
               <div className="h-12 w-full flex items-center justify-between px-6 z-10 bg-white/40 backdrop-blur-md">
                 <div className="flex gap-2.5 items-center pointer-events-auto">
                   {HERO_IMAGES.map((_, idx) => (
-                    <button 
+                    <button
                       key={idx}
                       onClick={(e) => { e.preventDefault(); setCurrentSlide(idx); }}
                       className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none ${idx === currentSlide ? 'bg-[#b45309] w-6' : 'bg-slate-100 w-2'}`}

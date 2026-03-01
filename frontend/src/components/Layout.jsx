@@ -4,7 +4,7 @@ import logo from '../assets/logo/IITM_LOGO.png';
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f5f6f8] text-[#1f2937] font-sans selection:bg-[#b45309] selection:text-white overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-[#f5f6f8] text-[#1f2937] font-sans selection:bg-[#b45309] selection:text-white overflow-x-clip">
 
       {/* Global Navigation Bar */}
       <Navigation />
@@ -14,8 +14,8 @@ const Layout = () => {
         <Outlet />
       </main>
 
-      {/* Structured Institutional Footer */}
-      <footer className="bg-[#eef1f4] border-t border-[#e5e7eb] py-14 mt-auto">
+      {/* Structured Institutional Footer with relative z-20 to cover the canvas */}
+      <footer className="relative z-20 bg-[#eef1f4] border-t border-[#e5e7eb] py-14 mt-auto">
         <div className="container mx-auto px-6 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-10 text-center md:text-left">
 
           <div className="flex flex-col md:flex-row items-center gap-6">
