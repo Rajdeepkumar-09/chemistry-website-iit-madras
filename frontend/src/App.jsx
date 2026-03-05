@@ -10,6 +10,7 @@ import Achievements from './pages/Achievements';
 import Rankings from './pages/Rankings';
 import FacilitiesEquipment from './pages/FacilitiesEquipment';
 import History from './pages/History';
+import Calendar from './pages/Calendar';
 import './App.css';
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
 
           {/* Admissions Routes */}
           <Route path="admissions/bs" element={<BsAdmissions />} />
+
+          {/* Academics Routes */}
+          <Route path="academics/calendar" element={<Calendar />} />
 
           {/* Catch-all route mapping to the elegant Placeholder component */}
           <Route path="*" element={<Placeholder />} />

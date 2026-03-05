@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { BookOpen, FlaskConical, Users, Globe, ArrowRight, Megaphone, Layers } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 
 // --- Shared Animation Variants ---
 const slowReveal = {
@@ -37,7 +38,9 @@ const ANNOUNCEMENTS = [
 ];
 
 // --- Interactive Spotlight Card for Core Domains ---
-const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
+const DomainCard = ({ icon: Icon, title, description, linkText, linkTo, useHoverButton = false }) => {
+  const divRef = useRef(null);
+  const navigate = useNavigate();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -52,12 +55,11 @@ const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
       variants={slowReveal}
       ref={divRef}
       onMouseMove={handleMouseMove}
-      // ENHANCED SHADOW: Added shadow-xl shadow-slate-200/60 for a deep, floating base shadow
-      className="group cursor-default bg-white/80 backdrop-blur-2xl p-8 border border-slate-200/60 shadow-xl shadow-slate-200/60 transition-all duration-300 flex flex-col h-full rounded-3xl relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(180,83,9,0.15)] hover:border-orange-200"
+      className="group/card cursor-default bg-white/80 backdrop-blur-2xl p-8 border border-slate-200/60 shadow-xl shadow-slate-200/60 transition-all duration-300 flex flex-col h-full rounded-3xl relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(180,83,9,0.15)] hover:border-orange-200"
     >
       {/* Spotlight Hover Glow */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-0"
+        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-300 group-hover/card:opacity-100 z-0"
         style={{
           background: useMotionTemplate`
             radial-gradient(
@@ -68,17 +70,28 @@ const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
           `,
         }}
       />
-      
+
       {/* Card Content */}
       <div className="relative z-10 flex flex-col h-full">
-        <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-50 text-slate-400 group-hover:bg-orange-50 group-hover:text-[#b45309] transition-all duration-300 group-hover:scale-110 origin-left border border-slate-100 group-hover:border-orange-100 shadow-sm">
+        <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-50 text-slate-400 group-hover/card:bg-orange-50 group-hover/card:text-[#b45309] transition-all duration-300 group-hover/card:scale-110 origin-left border border-slate-100 group-hover/card:border-orange-100 shadow-sm">
           <Icon size={26} strokeWidth={1.5} />
         </div>
         <h3 className="text-xl font-bold text-[#1f2937] mb-3">{title}</h3>
         <p className="text-[15px] text-[#4b5563] leading-relaxed font-medium mb-8">{description}</p>
-        <Link to={linkTo} className="mt-auto inline-flex items-center gap-2 font-bold text-[14px] text-[#b45309] hover:text-[#1f2937] transition-colors w-max">
-          {linkText} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-        </Link>
+
+        {useHoverButton ? (
+          <div className="mt-auto">
+            <InteractiveHoverButton
+              text={linkText}
+              onClick={() => navigate(linkTo)}
+              className="w-44 border-[#b45309]/30 text-[#b45309] text-[14px] font-bold"
+            />
+          </div>
+        ) : (
+          <Link to={linkTo} className="mt-auto inline-flex items-center gap-2 font-bold text-[14px] text-[#b45309] hover:text-[#1f2937] transition-colors w-max">
+            {linkText} <ArrowRight size={16} className="group-hover/card:translate-x-1 transition-transform" />
+          </Link>
+        )}
       </div>
     </motion.div>
   );
@@ -104,14 +117,14 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-orange-50/30 text-[#1f2937] font-sans selection:bg-[#b45309] selection:text-white overflow-hidden relative pb-32">
-      
+
       <motion.div style={{ scaleX: smoothProgress, transformOrigin: "0%" }} className="fixed top-0 left-0 w-full h-1 bg-[#b45309] z-[100]" />
 
       {/* --- BACKGROUND LAYER --- */}
       <div className="fixed inset-0 z-[0] pointer-events-none">
         <div className="absolute inset-0 opacity-[0.25] bg-[radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:24px_24px]"></div>
       </div>
-      
+
       {/* Soft Ambient Glows */}
       <div className="fixed inset-0 z-[0] pointer-events-none overflow-hidden">
         <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-[#b45309]/[0.06] rounded-full blur-[120px]"></div>
@@ -128,7 +141,7 @@ const Home = () => {
 
       {/* Content Layer */}
       <div className="container relative z-20 mx-auto px-6 pt-28 md:pt-32 pb-16 max-w-7xl">
-        
+
         {/* Hero Section */}
         <header className="mb-20 md:mb-32 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative">
           <div className="lg:col-span-7 relative z-10">
@@ -149,32 +162,32 @@ const Home = () => {
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 1.2 }} className="flex flex-col sm:flex-row gap-4">
-               {/* Animated Primary Button */}
-               <Link to="/about/overview" className="group relative inline-flex items-center justify-center px-8 py-4 bg-[#1f2937] text-white font-semibold rounded-xl border border-[#1f2937] shadow-lg shadow-slate-300/50 hover:bg-white hover:text-[#b45309] hover:border-[#b45309] hover:shadow-[0_8px_20px_rgba(180,83,9,0.15)] transition-all duration-300 overflow-hidden text-[15px] min-w-[180px]">
-                 <div className="flex items-center transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-x-3">
-                   <div className="w-2 h-2 rounded-full bg-white mr-3 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-0 group-hover:scale-0 group-hover:-translate-x-3" />
-                   <span>Discover More</span>
-                 </div>
-                 <div className="absolute right-6 opacity-0 -translate-x-4 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-100 group-hover:translate-x-0">
-                   <ArrowRight size={18} />
-                 </div>
-               </Link>
+              {/* Animated Primary Button */}
+              <Link to="/about/overview" className="group relative inline-flex items-center justify-center px-8 py-4 bg-[#1f2937] text-white font-semibold rounded-xl border border-[#1f2937] shadow-lg shadow-slate-300/50 hover:bg-white hover:text-[#b45309] hover:border-[#b45309] hover:shadow-[0_8px_20px_rgba(180,83,9,0.15)] transition-all duration-300 overflow-hidden text-[15px] min-w-[180px]">
+                <div className="flex items-center transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-x-3">
+                  <div className="w-2 h-2 rounded-full bg-white mr-3 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-0 group-hover:scale-0 group-hover:-translate-x-3" />
+                  <span>Discover More</span>
+                </div>
+                <div className="absolute right-6 opacity-0 -translate-x-4 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-100 group-hover:translate-x-0">
+                  <ArrowRight size={18} />
+                </div>
+              </Link>
 
-               {/* Animated Secondary Button */}
-               <Link to="/academics" className="group relative inline-flex items-center justify-center px-8 py-4 bg-white/90 backdrop-blur-xl border border-slate-200 text-[#1f2937] font-semibold rounded-xl shadow-lg shadow-slate-200/50 hover:bg-[#1f2937] hover:border-[#1f2937] hover:text-white hover:shadow-[0_8px_20px_rgba(31,41,55,0.15)] transition-all duration-300 overflow-hidden text-[15px] min-w-[200px]">
-                 <div className="flex items-center transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-x-3">
-                   <div className="w-2 h-2 rounded-full bg-[#b45309] mr-3 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-0 group-hover:scale-0 group-hover:-translate-x-3" />
-                   <span>Academic Programs</span>
-                 </div>
-                 <div className="absolute right-6 opacity-0 -translate-x-4 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-100 group-hover:translate-x-0">
-                   <ArrowRight size={18} />
-                 </div>
-               </Link>
+              {/* Animated Secondary Button */}
+              <Link to="/academics" className="group relative inline-flex items-center justify-center px-8 py-4 bg-white/90 backdrop-blur-xl border border-slate-200 text-[#1f2937] font-semibold rounded-xl shadow-lg shadow-slate-200/50 hover:bg-[#1f2937] hover:border-[#1f2937] hover:text-white hover:shadow-[0_8px_20px_rgba(31,41,55,0.15)] transition-all duration-300 overflow-hidden text-[15px] min-w-[200px]">
+                <div className="flex items-center transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-x-3">
+                  <div className="w-2 h-2 rounded-full bg-[#b45309] mr-3 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-0 group-hover:scale-0 group-hover:-translate-x-3" />
+                  <span>Academic Programs</span>
+                </div>
+                <div className="absolute right-6 opacity-0 -translate-x-4 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-100 group-hover:translate-x-0">
+                  <ArrowRight size={18} />
+                </div>
+              </Link>
             </motion.div>
           </div>
 
           {/* Glass Image Slider */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -210,9 +223,9 @@ const Home = () => {
         {/* --- HIGHLY POLISHED SEPARABLE LAYOUT --- */}
         <div className="relative">
           <motion.section variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-0 lg:divide-x lg:divide-slate-200/80 border-t lg:border-t-0 lg:border-l border-slate-200/80">
-              
+
               {/* === LEFT: UPDATES WIDGET (4 Columns) === */}
               <div className="lg:col-span-4 flex flex-col lg:pr-12">
                 <motion.h2 variants={slowReveal} className="text-2xl font-black mb-8 flex items-center gap-4 text-[#1f2937] uppercase tracking-tight relative">
@@ -237,10 +250,10 @@ const Home = () => {
                       </div>
                     </Link>
                   ))}
-                  
+
                   <div className="px-5 pt-4 pb-2 border-t border-slate-200/60 mt-2">
                     <Link to="/announcements" className="text-[#1f2937] font-bold text-sm flex items-center gap-2 hover:text-[#b45309] transition-colors group w-max border-b-2 border-transparent hover:border-[#b45309] pb-1">
-                        View All Announcements <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      View All Announcements <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </motion.div>
@@ -257,33 +270,34 @@ const Home = () => {
 
                 {/* Interactive Spotlight Card Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
-                  <DomainCard 
-                    icon={BookOpen} 
-                    title="Academic Programs" 
-                    description="BS, Dual Degree, MSc, and PhD programs designed to forge the next generation of scientists." 
-                    linkText="View Curriculum" 
-                    linkTo="/academics" 
+                  <DomainCard
+                    icon={BookOpen}
+                    title="Academic Programs"
+                    description="BS, Dual Degree, MSc, and PhD programs designed to forge the next generation of scientists."
+                    linkText="View Curriculum"
+                    linkTo="/academics"
                   />
-                  <DomainCard 
-                    icon={FlaskConical} 
-                    title="Research Facilities" 
-                    description="State-of-the-art facilities ranging from theoretical catalysis to advanced materials and energy storage." 
-                    linkText="Explore Research" 
-                    linkTo="/research" 
+                  <DomainCard
+                    icon={FlaskConical}
+                    title="Research Facilities"
+                    description="State-of-the-art facilities ranging from theoretical catalysis to advanced materials and energy storage."
+                    linkText="Explore Research"
+                    linkTo="/research"
+                    useHoverButton={true}
                   />
-                  <DomainCard 
-                    icon={Users} 
-                    title="Community" 
-                    description="A diverse and vibrant community of globally recognized faculty, brilliant students, and notable alumni." 
-                    linkText="Meet the Team" 
-                    linkTo="/people" 
+                  <DomainCard
+                    icon={Users}
+                    title="Community"
+                    description="A diverse and vibrant community of globally recognized faculty, brilliant students, and notable alumni."
+                    linkText="Meet the Team"
+                    linkTo="/people"
                   />
-                  <DomainCard 
-                    icon={Globe} 
-                    title="Global Collaborations" 
-                    description="Fostering strong partnerships with national and international universities and industry alliances." 
-                    linkText="View Partnerships" 
-                    linkTo="/collaborations/international" 
+                  <DomainCard
+                    icon={Globe}
+                    title="Global Collaborations"
+                    description="Fostering strong partnerships with national and international universities and industry alliances."
+                    linkText="View Partnerships"
+                    linkTo="/collaborations/international"
                   />
                 </div>
               </div>

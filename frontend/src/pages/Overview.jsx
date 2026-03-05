@@ -195,7 +195,7 @@ const Overview = () => {
             drawHeight = img.height * (width / img.width);
             offsetX = 0;
             // Align to the top so the subject's head isn't cropped
-            offsetY = 0; 
+            offsetY = 0;
         }
         ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
         lastRenderedFrame.current = frameIndex;
@@ -419,50 +419,50 @@ const Overview = () => {
                         </motion.div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {[
-                                { 
-                                    title: "Research Excellence", 
-                                    desc: "Pushing the boundaries of knowledge through rigorous curiosity-driven fundamentally applied research.", 
+                                {
+                                    title: "Research Excellence",
+                                    desc: "Pushing the boundaries of knowledge through rigorous curiosity-driven fundamentally applied research.",
                                     icon: "🔬",
-                                    glowColor: "rgba(245, 158, 11, 0.15)", // Amber
-                                    hoverBorder: "hover:border-amber-400/50",
-                                    hoverShadow: "hover:shadow-[0_15px_35px_-10px_rgba(245,158,11,0.15)]",
-                                    hoverText: "group-hover:text-amber-600"
-                                },
-                                { 
-                                    title: "Academic Rigor", 
-                                    desc: "Delivering world-class education that combines deep theoretical foundations with practical laboratory training.", 
-                                    icon: "📚",
-                                    glowColor: "rgba(59, 130, 246, 0.15)", // Blue
+                                    glowColor: "rgba(59, 130, 246, 0.15)", // Light Blue
                                     hoverBorder: "hover:border-blue-400/50",
                                     hoverShadow: "hover:shadow-[0_15px_35px_-10px_rgba(59,130,246,0.15)]",
                                     hoverText: "group-hover:text-blue-600"
                                 },
-                                { 
-                                    title: "Innovation & Impact", 
-                                    desc: "Translating research into solutions — from patents and startups to policy and societal benefit.", 
-                                    icon: "💡",
-                                    glowColor: "rgba(16, 185, 129, 0.15)", // Emerald
-                                    hoverBorder: "hover:border-emerald-400/50",
-                                    hoverShadow: "hover:shadow-[0_15px_35px_-10px_rgba(16,185,129,0.15)]",
-                                    hoverText: "group-hover:text-emerald-600"
+                                {
+                                    title: "Academic Rigor",
+                                    desc: "Delivering world-class education that combines deep theoretical foundations with practical laboratory training.",
+                                    icon: "📚",
+                                    glowColor: "rgba(239, 68, 68, 0.15)", // Light Red
+                                    hoverBorder: "hover:border-red-400/50",
+                                    hoverShadow: "hover:shadow-[0_15px_35px_-10px_rgba(239,68,68,0.15)]",
+                                    hoverText: "group-hover:text-red-600"
                                 },
-                                { 
-                                    title: "Global Collaboration", 
-                                    desc: "Fostering international partnerships with leading universities industries worldwide.", 
+                                {
+                                    title: "Innovation & Impact",
+                                    desc: "Translating research into solutions — from patents and startups to policy and societal benefit.",
+                                    icon: "💡",
+                                    glowColor: "rgba(234, 179, 8, 0.15)", // Yellow
+                                    hoverBorder: "hover:border-yellow-400/50",
+                                    hoverShadow: "hover:shadow-[0_15px_35px_-10px_rgba(234,179,8,0.15)]",
+                                    hoverText: "group-hover:text-yellow-600"
+                                },
+                                {
+                                    title: "Global Collaboration",
+                                    desc: "Fostering international partnerships with leading universities industries worldwide.",
                                     icon: "🌍",
-                                    glowColor: "rgba(168, 85, 247, 0.15)", // Purple
-                                    hoverBorder: "hover:border-purple-400/50",
-                                    hoverShadow: "hover:shadow-[0_15px_35px_-10px_rgba(168,85,247,0.15)]",
-                                    hoverText: "group-hover:text-purple-600"
+                                    glowColor: "rgba(34, 197, 94, 0.15)", // Natural Green
+                                    hoverBorder: "hover:border-green-400/50",
+                                    hoverShadow: "hover:shadow-[0_15px_35px_-10px_rgba(34,197,94,0.15)]",
+                                    hoverText: "group-hover:text-green-600"
                                 },
                             ].map((value, idx) => (
-                                <InteractiveColorCard 
-                                    key={idx} 
-                                    glowColor={value.glowColor} 
-                                    initial={{ opacity: 0, y: 20 }} 
-                                    whileInView={{ opacity: 1, y: 0 }} 
-                                    viewport={{ once: true }} 
-                                    transition={{ duration: 0.6, delay: idx * 0.1 }} 
+                                <InteractiveColorCard
+                                    key={idx}
+                                    glowColor={value.glowColor}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.6, delay: idx * 0.1 }}
                                     className={`group text-center bg-white border border-slate-200 rounded-2xl p-8 transition-all duration-300 ${value.hoverBorder} ${value.hoverShadow}`}
                                 >
                                     <div className="text-4xl mb-5 group-hover:scale-110 transition-transform duration-300 relative z-10">{value.icon}</div>
