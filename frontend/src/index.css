@@ -9,6 +9,11 @@
   --color-text-secondary: #4b5563;
   --color-accent-amber: #b45309;
   --color-border-subtle: #e5e7eb;
+
+  /* shadcn-compatible tokens for InteractiveHoverButton */
+  --color-background: #ffffff;
+  --color-primary: #b45309;
+  --color-primary-foreground: #ffffff;
 }
 
 /* Global Strict Rules for Scrollbar Physics & Baseline */
@@ -23,7 +28,16 @@ body,
   font-family: 'Inter', 'Roboto', ui-sans-serif, system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden; /* CRITICAL BUGFIX: Prevents horizontal scrolling */
+  overflow-x: clip; /* <--- CHANGED THIS LINE */
 }
 
+/* Ken Burns zoom effect for hero slider images */
+@keyframes kenburns {
+  0% {
+    transform: scale(1);
+  }
 
+  100% {
+    transform: scale(1.08);
+  }
+}

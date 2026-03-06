@@ -1,230 +1,66 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ChevronDown, Menu, X, Plus, Minus, Home as HomeIcon, FlaskConical } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/logo/IITM_LOGO.png';
 
-// Structured Navigation Data Configuration
+// --- Structured Navigation Data Configuration ---
 const NAVIGATION_DATA = [
   {
     title: 'About',
-    path: null,
+    path: '/about',
     groups: [
-       {
-         heading: null,
-         links: [
-           { label: 'Overview', to: '/about/overview' },
-           { label: 'Message From Head', to: '/about/message-from-head' },
-           { label: 'Vision & Mission', to: '/about/vision-mission' },
-           { label: 'Achievements', to: '/about/achievements' },
-           { label: 'Rankings', to: '/about/rankings' },
-           { label: 'History', to: '/about/history' },
-         ]
-       },
-       {
-         heading: 'Administration',
-         links: [
-           { label: 'Advisory Board', to: '/about/advisory-board' },
-           { label: 'Committees', to: '/about/committees' },
-           { label: 'Annual Reports', to: '/about/annual-reports' },
-         ]
-       },
-       {
-         heading: 'IITM Specific',
-         links: [
-           { label: 'Industry Partnerships', to: '/about/industry-partnerships' },
-           { label: 'Research Park Link', to: '/about/research-park-link' },
-         ]
-       }
+      { heading: null, links: [{ label: 'Overview', to: '/about/overview' }, { label: 'Message From Head', to: '/about/message-from-head' }, { label: 'Achievements', to: '/about/achievements' }, { label: 'Rankings', to: '/about/rankings' }, { label: 'Facilities & Equipment', to: '/about/facilities-equipment' }, { label: 'History', to: '/about/history' }] },
+      { heading: 'Administration', links: [{ label: 'Advisory Board', to: '/about/advisory-board' }, { label: 'Committees', to: '/about/committees' }, { label: 'Annual Reports', to: '/about/annual-reports' }] },
+      { heading: 'IITM Specific', links: [{ label: 'Industry Partnerships', to: '/about/industry-partnerships' }, { label: 'Research Park Link', to: '/about/research-park-link' }] }
     ]
   },
   {
     title: 'Academics',
     path: '/academics',
     groups: [
-      {
-        heading: 'Undergraduate',
-        links: [
-          { label: 'BS Chemistry', to: '/academics/undergraduate/bs-chemistry' },
-          { label: 'Dual Degree', to: '/academics/undergraduate/dual-degree' },
-          { label: 'Curriculum', to: '/academics/undergraduate/curriculum' },
-          { label: 'Course Structure', to: '/academics/undergraduate/course-structure' },
-          { label: 'Minor in Chemistry', to: '/academics/undergraduate/minor' },
-        ]
-      },
-      {
-        heading: 'Postgraduate',
-        links: [
-           { label: 'MSc Program', to: '/academics/postgraduate/msc' },
-           { label: 'PhD Program', to: '/academics/postgraduate/phd' },
-           { label: 'Eligibility', to: '/academics/postgraduate/eligibility' },
-           { label: 'Handbook', to: '/academics/postgraduate/handbook' },
-        ]
-      },
-      {
-        heading: 'Courses',
-        links: [
-           { label: 'Core Courses', to: '/academics/courses/core' },
-           { label: 'Elective Courses', to: '/academics/courses/elective' },
-           { label: 'Lab Courses', to: '/academics/courses/lab' },
-           { label: 'Course Catalog', to: '/academics/courses/catalog' },
-        ]
-      },
-      {
-        heading: 'Interdisciplinary',
-        links: [
-           { label: 'Chemistry + AI', to: '/academics/interdisciplinary/ai' },
-           { label: 'Chemistry + Materials', to: '/academics/interdisciplinary/materials' },
-           { label: 'Chemistry + Energy', to: '/academics/interdisciplinary/energy' },
-           { label: 'Chemistry + Bio', to: '/academics/interdisciplinary/bio' },
-        ]
-      },
-      {
-        heading: 'Resources',
-        links: [
-           { label: 'Academic Calendar', to: '/academics/calendar' },
-           { label: 'Timetable', to: '/academics/timetable' },
-           { label: 'Regulations', to: '/academics/regulations' },
-        ]
-      }
+      { heading: 'Undergraduate', links: [{ label: 'BS+MS Dual Degree', to: '/academics/undergraduate/bs-ms-dual' }, { label: 'Curriculum', to: '/academics/undergraduate/curriculum' }, { label: 'Course Structure', to: '/academics/undergraduate/course-structure' }, { label: 'Minor in Chemistry', to: '/academics/undergraduate/minor' }] },
+      { heading: 'Postgraduate', links: [{ label: 'MSc Program', to: '/academics/postgraduate/msc' }, { label: 'PhD Program', to: '/academics/postgraduate/phd' }] },
+      { heading: 'Courses', links: [{ label: 'Core Courses', to: '/academics/courses/core' }, { label: 'Elective Courses', to: '/academics/courses/elective' }, { label: 'Lab Courses', to: '/academics/courses/lab' }, { label: 'Course Catalog', to: '/academics/courses/catalog' }] },
+      { heading: 'Resources', links: [{ label: 'Academic Calendar', to: '/academics/calendar' }, { label: 'Timetable', to: '/academics/timetable' }, { label: 'Regulations', to: '/academics/regulations' }] }
     ]
   },
   {
     title: 'Research',
     path: '/research',
     groups: [
-      {
-         heading: 'Overview & Output',
-         links: [
-           { label: 'Publications', to: '/research/publications' },
-           { label: 'Patents', to: '/research/patents' },
-           { label: 'Funded Projects', to: '/research/funded-projects' },
-           { label: 'Research Facilities', to: '/research/facilities' },
-           { label: 'Industry Collaboration', to: '/research/industry-collaboration' },
-         ]
-      },
-      {
-         heading: 'Research Areas',
-         links: [
-           { label: 'Inorganic', to: '/research/areas/inorganic' },
-           { label: 'Organic', to: '/research/areas/organic' },
-           { label: 'Physical', to: '/research/areas/physical' },
-           { label: 'Theoretical', to: '/research/areas/theoretical' },
-           { label: 'Materials Chemistry', to: '/research/areas/materials' },
-         ]
-      },
-      {
-         heading: 'Specialized Fields',
-         links: [
-           { label: 'Catalysis', to: '/research/areas/catalysis' },
-           { label: 'Energy Storage', to: '/research/areas/energy-storage' },
-           { label: 'Computational Chemistry', to: '/research/areas/computational' },
-           { label: 'Nanoscience', to: '/research/areas/nanoscience' },
-         ]
-      },
-      {
-         heading: 'Centers',
-         links: [
-           { label: 'Energy Center', to: '/research/centers/energy' },
-           { label: 'Materials Center', to: '/research/centers/materials' },
-           { label: 'Sustainability Center', to: '/research/centers/sustainability' },
-         ]
-      }
+      { heading: 'Overview & Output', links: [{ label: 'Publications', to: '/research/publications' }, { label: 'Patents', to: '/research/patents' }, { label: 'Funded Projects', to: '/research/facilities' }, { label: 'Research Facilities', to: '/research/facilities' }, { label: 'Industry Collaboration', to: '/research/industry-collaboration' }] },
+      { heading: 'Research Areas', links: [{ label: 'Inorganic', to: '/research/areas/inorganic' }, { label: 'Organic', to: '/research/areas/organic' }, { label: 'Physical', to: '/research/areas/physical' }, { label: 'Theoretical', to: '/research/areas/theoretical' }, { label: 'Materials Chemistry', to: '/research/areas/materials' }] },
+      { heading: 'Specialized Fields', links: [{ label: 'Catalysis', to: '/research/areas/catalysis' }, { label: 'Energy Storage', to: '/research/areas/energy-storage' }, { label: 'Computational Chemistry', to: '/research/areas/computational' }, { label: 'Nanoscience', to: '/research/areas/nanoscience' }] },
+      { heading: 'Centers', links: [{ label: 'Energy Center', to: '/research/centers/energy' }, { label: 'Materials Center', to: '/research/centers/materials' }, { label: 'Sustainability Center', to: '/research/centers/sustainability' }] }
     ]
   },
   {
     title: 'People',
-    path: null,
+    path: '/people',
     groups: [
-      {
-        heading: 'Faculty',
-        links: [
-           { label: 'Inorganic', to: '/people/faculty/inorganic' },
-           { label: 'Organic', to: '/people/faculty/organic' },
-           { label: 'Physical', to: '/people/faculty/physical' },
-           { label: 'Emeritus', to: '/people/faculty/emeritus' },
-           { label: 'Visiting', to: '/people/faculty/visiting' },
-        ]
-      },
-      {
-        heading: 'Staff & Postdocs',
-        links: [
-           { label: 'Staff', to: '/people/staff' },
-           { label: 'Postdocs', to: '/people/postdocs' },
-        ]
-      },
-      {
-         heading: 'Students',
-         links: [
-           { label: 'BS Students', to: '/people/students/bs' },
-           { label: 'MSc Students', to: '/people/students/msc' },
-           { label: 'PhD Students', to: '/people/students/phd' },
-           { label: 'Project Students', to: '/people/students/project' },
-         ]
-      },
-      {
-         heading: 'Alumni',
-         links: [
-           { label: 'Alumni Directory', to: '/people/alumni' },
-         ]
-      }
+      { heading: 'Faculty', links: [{ label: 'Inorganic', to: '/people/faculty/inorganic' }, { label: 'Organic', to: '/people/faculty/organic' }, { label: 'Physical', to: '/people/faculty/physical' }, { label: 'Emeritus', to: '/people/faculty/emeritus' }, { label: 'Visiting', to: '/people/faculty/visiting' }] },
+      { heading: 'Staff & Postdocs', links: [{ label: 'Staff', to: '/people/staff' }, { label: 'Postdocs', to: '/people/postdocs' }] },
+      { heading: 'Students', links: [{ label: 'BS Students', to: '/people/students/bs' }, { label: 'MSc Students', to: '/people/students/msc' }, { label: 'PhD Students', to: '/people/students/phd' }, { label: 'Project Students', to: '/people/students/project' }] },
+      { heading: 'Alumni', links: [{ label: 'Alumni Directory', to: '/people/alumni' }] }
     ]
   },
   {
     title: 'Admissions',
-    path: null,
+    path: '/admissions',
     groups: [
-      {
-         heading: 'Programs',
-         links: [
-           { label: 'BS Admission', to: '/admissions/bs' },
-           { label: 'MSc Admission', to: '/admissions/msc' },
-           { label: 'PhD Admission', to: '/admissions/phd' },
-           { label: 'International Admission', to: '/admissions/international' },
-         ]
-      },
-      {
-         heading: 'Information',
-         links: [
-           { label: 'FAQ', to: '/admissions/faq' },
-           { label: 'Brochure', to: '/admissions/brochure' },
-         ]
-      }
+      { heading: 'Programs', links: [{ label: 'BS Admission', to: '/admissions/bs' }, { label: 'MSc Admission', to: '/admissions/msc' }, { label: 'PhD Admission', to: '/admissions/phd' }, { label: 'International Admission', to: '/admissions/international' }] },
+      { heading: 'Information', links: [{ label: 'FAQ', to: '/admissions/faq' }, { label: 'Brochure', to: '/admissions/brochure' }] }
     ]
   },
   {
-    title: 'Explore More',
-    path: null,
+    title: 'Explore',
+    path: '/explore',
     groups: [
-      {
-        heading: 'Seminars & Events',
-        links: [
-           { label: 'Upcoming', to: '/seminars/upcoming' },
-           { label: 'Past', to: '/seminars/past' },
-           { label: 'Distinguished Lectures', to: '/seminars/distinguished' },
-        ]
-      },
-      {
-        heading: 'Facilities',
-        links: [
-           { label: 'Teaching Labs', to: '/facilities/teaching-labs' },
-           { label: 'Research Labs', to: '/facilities/research-labs' },
-        ]
-      },
-      {
-         heading: 'Placements & Outreach',
-         links: [
-           { label: 'Placement Statistics', to: '/placements/statistics' },
-           { label: 'Internships', to: '/placements/internships' },
-           { label: 'School Programs', to: '/outreach/school-programs' },
-           { label: 'Workshops', to: '/outreach/workshops' },
-         ]
-      },
-      {
-         heading: 'Contact',
-         links: [
-           { label: 'Contact Us / Directory', to: '/contact/contact-us' },
-         ]
-      }
+      { heading: 'Seminars & Events', links: [{ label: 'Upcoming', to: '/seminars/upcoming' }, { label: 'Past', to: '/seminars/past' }, { label: 'Distinguished Lectures', to: '/seminars/distinguished' }] },
+      { heading: 'Facilities', links: [{ label: 'Teaching Labs', to: '/facilities/teaching-labs' }, { label: 'Research Labs', to: '/facilities/research-labs' }] },
+      { heading: 'Placements & Outreach', links: [{ label: 'Placement Statistics', to: '/placements/statistics' }, { label: 'Internships', to: '/placements/internships' }, { label: 'School Programs', to: '/outreach/school-programs' }, { label: 'Workshops', to: '/outreach/workshops' }] },
+      { heading: 'Contact', links: [{ label: 'Contact Us', to: '/contact/contact-us' }] }
     ]
   }
 ];
@@ -237,11 +73,28 @@ const Navigation = () => {
   const [openMobileAccordion, setOpenMobileAccordion] = useState(null);
   const timeoutRef = useRef(null);
   
-  // ADDED: Security State
+  // FIX: Added the missing isScrolled state!
+  const [isScrolled, setIsScrolled] = useState(false);
+  
+  // Security State
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('userRole');
 
-  // ADDED: Smart Dashboard Routing Logic
+  // FIX: Added the scroll listener to update isScrolled when the user scrolls down
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Smart Dashboard Routing Logic
   const getDashboardLink = () => {
     if (role === 'admin') return '/admin';
     if (role === 'faculty') return '/faculty-dashboard';
@@ -249,7 +102,7 @@ const Navigation = () => {
     return '/login'; // Fallback
   };
 
-  // ADDED: Logout Logic
+  // Logout Logic
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userRole');
@@ -366,27 +219,26 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-white sticky top-0 border-b border-[#e5e7eb] relative z-[1000] shadow-sm">
-      <div className="container mx-auto px-6 max-w-[95rem]"> {/* Expanded width slightly to fit auth buttons */}
-        <div className="flex items-center justify-between h-20">
-           
-           {/* Logo Image & Text */}
-           <Link to="/" className="flex items-center gap-4">
-             <img src={logo} alt="IIT Madras Chemistry Department" className="h-[52px] w-auto object-contain" />
-             <div className="flex flex-col justify-center hidden sm:flex">
-               <span className="text-[17px] font-bold text-[#1f2937] leading-tight tracking-tight">Department of Chemistry</span>
-               <span className="text-[13px] font-semibold text-[#b45309] leading-tight tracking-wide uppercase mt-0.5">IIT Madras</span>
-             </div>
-           </Link>
-           
-           {/* Mobile Menu Toggle Button */}
-           <button 
-             type="button"
-             className="xl:hidden p-2 text-[#4b5563] hover:text-[#1f2937] focus:outline-none"
-             onClick={() => setIsMobileMenuOpen(true)}
-           >
-             <Menu size={28} />
-           </button>
+    <nav className={`fixed w-full top-0 z-[1000] transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.06)] border-transparent' : 'bg-white/80 backdrop-blur-sm border-b border-black/5'}`}>
+
+      <div className="container mx-auto px-6 max-w-7xl">
+        <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-16' : 'h-20'}`}>
+          <Link to="/" className="flex items-center gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded-lg">
+            <img src={logo} alt="IIT Madras Chemistry Department" className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-[42px]' : 'h-[52px]'}`} />
+            <div className="flex-col justify-center hidden sm:flex">
+              <span className="text-[17px] font-bold text-[#1f2937] group-hover:text-orange-700 transition-colors leading-tight tracking-tight">Department of Chemistry</span>
+              <span className="text-[13px] font-semibold text-[#4b5563] leading-tight tracking-wide uppercase mt-0.5">IIT Madras</span>
+            </div>
+          </Link>
+
+          <button
+            type="button"
+            className="lg:hidden p-2 text-[#4b5563] hover:text-orange-700 hover:bg-orange-50 rounded-lg transition-colors focus:outline-none"
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label="Open primary menu"
+          >
+            <Menu size={28} />
+          </button>
 
           {/* Desktop Navigation Links & Auth Container */}
           <div className="hidden xl:flex xl:items-center xl:gap-2 h-full relative">
@@ -402,11 +254,11 @@ const Navigation = () => {
                   <NavButton title={navItem.title} isActive={isActive} />
                   <MegaMenu navItem={navItem} isActive={isActive} />
                 </div>
-              );
-            })}
+              )}) }
+            </div>
 
             {/* UPGRADED: The Authentication Buttons (Desktop) */}
-            <div className="flex items-center gap-4 ml-4 pl-4 border-l border-gray-300">
+            <div className="flex items-center gap-4 ml-4 pl-4 border-l border-gray-300 hidden xl:flex">
               {token ? (
                 <>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-2.5 py-1 rounded">
@@ -430,7 +282,6 @@ const Navigation = () => {
 
           </div>
         </div>
-      </div>
 
       {/* --- Mobile Drawer Navigation --- */}
       {isMobileMenuOpen && (
