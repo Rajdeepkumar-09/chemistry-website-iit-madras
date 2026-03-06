@@ -13,6 +13,11 @@ import About from './pages/About';
 import Academics from './pages/Academics';
 import Achievements from './pages/Achievements';
 import BsAdmissions from './pages/BsAdmissions';
+import Rankings from './pages/Rankings';
+import FacilitiesEquipment from './pages/FacilitiesEquipment';
+import History from './pages/History';
+import AcademicCalendar from './pages/AcademicCalendar';
+import TimeTable from './pages/TimeTable';
 import Calendar from './pages/Calendar';
 import Contact from './pages/Contact';
 import Facilities from './pages/Facilities';
@@ -65,6 +70,25 @@ function App() {
           
           <Route path="/news" element={<NewsEvents />} />
           <Route path="/contact" element={<Contact />} />
+        {/* Main Application Layout Wrapper */}
+        <Route path="/" element={<Layout />}>
+
+          {/* Index Route - Home Page */}
+          <Route index element={<Home />} />
+
+          {/* About Routes */}
+          <Route path="about" element={<Overview />} />
+          <Route path="about/overview" element={<Overview />} />
+          <Route path="about/message-from-head" element={<MessageFromHead />} />
+          <Route path="about/achievements" element={<Achievements />} />
+          <Route path="about/rankings" element={<Rankings />} />
+          <Route path="about/facilities-equipment" element={<FacilitiesEquipment />} />
+          <Route path="about/history" element={<History />} />
+
+          {/* Academics Routes */}
+          <Route path="academics" element={<Academics />} />
+          <Route path="academics/calendar" element={<AcademicCalendar />} />
+          <Route path="academics/timetable" element={<TimeTable />} />
 
           {/* Catch-all for unbuilt pages */}
           <Route path="*" element={<Placeholder />} />
