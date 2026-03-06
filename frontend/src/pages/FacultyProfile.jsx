@@ -12,7 +12,7 @@ const FacultyProfile = () => {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-[#1a1a1a] mb-2">Faculty Not Found</h1>
           <p className="text-sm text-[#888] mb-6">The requested faculty profile does not exist.</p>
-          <Link to="/people/faculty" className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#7b1113] text-white rounded-lg text-sm font-semibold hover:bg-[#601012] transition-colors">
+          <Link to="/people" className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#7b1113] text-white rounded-lg text-sm font-semibold hover:bg-[#601012] transition-colors">
             <ArrowLeft size={14} /> Back to Faculty
           </Link>
         </div>
@@ -30,7 +30,7 @@ const FacultyProfile = () => {
       {/* Header */}
       <div className="bg-white border-b border-[#e8e0d4]">
         <div className="container mx-auto px-6 max-w-7xl py-10 md:py-14">
-          <Link to="/people/faculty" className="inline-flex items-center gap-2 text-sm text-[#7b1113] hover:text-[#601012] font-medium mb-6 transition-colors">
+          <Link to="/people" className="inline-flex items-center gap-2 text-sm text-[#7b1113] hover:text-[#601012] font-medium mb-6 transition-colors">
             <ArrowLeft size={14} /> Faculty Directory
           </Link>
 

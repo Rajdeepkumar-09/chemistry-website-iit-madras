@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Calendar, Award, Users, ArrowRight } from 'lucide-react';
+import { Calendar, Award, Users, ArrowRight, ExternalLink, MapPin, Clock } from 'lucide-react';
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
 
@@ -14,23 +14,32 @@ const FadeIn = ({ children, className = '', delay = 0 }) => {
   );
 };
 
+// Real news from chem.iitm.ac.in
 const NEWS = [
-  { text: 'Department of Chemistry welcomes Dr. Satyajit Roy. He is joining the department as an Assistant Professor', tag: 'New Faculty', date: 'Jan 2026' },
-  { text: 'Prof. Pradeep has been selected for the prestigious Rashtriya Vigyan Puraskar award instituted by the Government of India for the year 2025.', tag: 'National Award', date: 'Dec 2025' },
-  { text: 'Prof. Beeraiah has been selected to receive CRSI Bronze Medal for the year 2026.', tag: 'Award', date: 'Nov 2025' },
-  { text: 'Prof. Raman has received Annamalai & Santhi Rajendran Early Career Chair Professorship from IIT Madras', tag: 'Recognition', date: 'Nov 2025' },
-  { text: 'Department of Chemistry welcomes Dr. Yogesh G. Shelke. He is joining the department as an Assistant Professor', tag: 'New Faculty', date: 'Oct 2025' },
-  { text: 'Prof. Pradeep has received Panjab University Vigyan Ratna award', tag: 'Award', date: 'Oct 2025' },
-  { text: 'Prof. Ramesh has been invited to join editorial board of the journal Chemical Physics', tag: 'Recognition', date: 'Sep 2025' },
-  { text: 'Department of Chemistry welcomes Dr. Debotra Sarkar. He is joining the department as an Assistant Professor', tag: 'New Faculty', date: 'Aug 2025' },
+  { text: 'Department of Chemistry welcomes Dr. Satyajit Roy. He is joining the department as an Assistant Professor.', tag: 'New Faculty', date: 'Jan 2026' },
+  { text: 'Prof. Thalappil Pradeep has been selected for the prestigious Rashtriya Vigyan Puraskar award instituted by the Government of India for the year 2025.', tag: 'National Award', date: 'Dec 2025' },
+  { text: 'Prof. Beeraiah Baire has been selected to receive CRSI Bronze Medal for the year 2026.', tag: 'Award', date: 'Nov 2025' },
+  { text: 'Prof. R. Kothandaraman has received Annamalai & Santhi Rajendran Early Career Chair Professorship from IIT Madras.', tag: 'Recognition', date: 'Nov 2025' },
+  { text: 'Department of Chemistry welcomes Dr. Yogesh G. Shelke. He is joining the department as an Assistant Professor.', tag: 'New Faculty', date: 'Oct 2025' },
+  { text: 'Prof. Thalappil Pradeep has received Panjab University Vigyan Ratna award.', tag: 'Award', date: 'Oct 2025' },
+  { text: 'Prof. Ramesh L. Gardas has been invited to join the editorial board of the journal Chemical Physics.', tag: 'Recognition', date: 'Sep 2025' },
+  { text: 'Department of Chemistry welcomes Dr. Debotra Sarkar. He is joining the department as an Assistant Professor.', tag: 'New Faculty', date: 'Aug 2025' },
+  { text: 'List of provisionally selected PhD candidates for January 2026 session has been published.', tag: 'Admissions', date: 'Dec 2025' },
 ];
 
+// Real guest lectures and events from chem.iitm.ac.in
 const EVENTS = [
-  { title: 'Unlocking new chemical space via selective catalysis', speaker: 'Prof. Debabrata Maiti, Department of Chemistry, IIT Bombay', date: 'Aug 12, 2025', venue: 'CB-310', time: '4:00 PM' },
-  { title: 'Conformational Characterization of a Frustrated G-rich DNA Sequence', speaker: 'Dr. Bharathwaj Satyamoorthy, Department of Chemistry, IISER-Bhopal', date: 'Jun 2, 2025', venue: 'CB-310', time: '3:00 PM' },
-  { title: 'Battery Material Innovations: An Industry R&D View', speaker: 'Dr. S. Venkatraman, Duracell India', date: 'Dec 30, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'Battery Material Innovations: An Industry R&D View', speaker: 'Dr. S. Venkatraman, R&D Director, Duracell India', date: 'Dec 30, 2025', venue: 'CB-310', time: '4:00 PM' },
   { title: 'National Conference on Organic Chemistry (NCOC) 2025', speaker: 'Department of Chemistry, IIT Madras', date: 'Dec 23-24, 2025', venue: 'IIT Madras', time: 'All Day' },
   { title: 'History and Future of X-ray Absorption Spectroscopy', speaker: 'Prof. Gerald Seidler, University of Washington', date: 'Nov 21, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'New Group 14 Chemical Brick by Hypersilyl Trick', speaker: 'Dr. Sakya S. Sen, CSIR-NCL, Pune', date: 'Nov 13, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'Vibrational Dephasing of a Morse Oscillator', speaker: 'Prof. Sushanta Dattagupta, Sister Nivedita University, Kolkata', date: 'Oct 29, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'The Future\'s Bright for Photochemistry', speaker: 'Prof. Andrew Orr-Ewing FRS, University of Bristol', date: 'Oct 28, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'Engineering Microenvironments at Electrochemical Interfaces', speaker: 'Dr. Deepak Badgurjar, University of Chicago', date: 'Oct 14, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'Protein Dynamics and Machine Learning for Drug Discovery', speaker: 'Dr. Neha Vithani, Openeye Cadence Molecular Sciences, USA', date: 'Oct 9, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'Trajectory to Industry Career: Publication to Product', speaker: 'Dr. Bhuvaneswari, Adjunct Faculty, IIT Madras', date: 'Sep 24, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'Unlocking New Chemical Space via Selective Catalysis', speaker: 'Prof. Debabrata Maiti, Department of Chemistry, IIT Bombay', date: 'Aug 12, 2025', venue: 'CB-310', time: '4:00 PM' },
+  { title: 'Conformational Characterization of a Frustrated G-rich DNA Sequence', speaker: 'Dr. Bharathwaj Satyamoorthy, Department of Chemistry, IISER Bhopal', date: 'Jun 2, 2025', venue: 'CB-310', time: '3:00 PM' },
 ];
 
 const NewsEvents = () => {
@@ -41,10 +50,10 @@ const NewsEvents = () => {
         <div className="container mx-auto px-6 max-w-7xl py-12 md:py-16">
           <div className="flex items-center gap-3 mb-3">
             <div className="h-px w-8 bg-[#7b1113]" />
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-[#7b1113]">News & Events</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-[#7b1113]">Department Updates</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] tracking-tight mb-4">News & Events</h1>
-          <p className="text-[#888] text-sm max-w-xl">Latest news, achievements, and upcoming events from the Department of Chemistry.</p>
+          <p className="text-[#888] text-sm max-w-xl">Latest news, achievements, and guest lectures from the Department of Chemistry, IIT Madras.</p>
         </div>
       </div>
 
@@ -86,9 +95,9 @@ const NewsEvents = () => {
                     <div className="flex flex-wrap items-center gap-2 mb-2 text-xs text-[#999]">
                       <span className="inline-flex items-center gap-1"><Calendar size={12} className="text-[#7b1113]" /> {evt.date}</span>
                       <span>·</span>
-                      <span>{evt.time}</span>
+                      <span className="inline-flex items-center gap-1"><Clock size={12} /> {evt.time}</span>
                       <span>·</span>
-                      <span>{evt.venue}</span>
+                      <span className="inline-flex items-center gap-1"><MapPin size={12} /> {evt.venue}</span>
                     </div>
                     <h3 className="text-sm font-semibold text-[#1a1a1a] mb-1 leading-snug">&ldquo;{evt.title}&rdquo;</h3>
                     <p className="text-xs text-[#888]">{evt.speaker}</p>
@@ -105,6 +114,27 @@ const NewsEvents = () => {
                 <a href="https://research.iitm.ac.in/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#7b1113] font-semibold rounded-xl text-sm">
                   Research Portal <ArrowRight size={14} />
                 </a>
+              </div>
+            </FadeIn>
+
+            {/* Department Events */}
+            <FadeIn delay={0.35}>
+              <div className="mt-6 bg-white border border-[#e8e0d4] rounded-2xl p-6">
+                <h3 className="text-sm font-bold text-[#1a1a1a] mb-4">Past Conferences & Events</h3>
+                <div className="space-y-2.5">
+                  {[
+                    { name: 'NCOC 2025 — National Conference on Organic Chemistry', year: '2025' },
+                    { name: 'Waterforlife 2022 — International Conference', year: '2022' },
+                    { name: 'Molmatter 2022 — Molecular Matter Conference', year: '2022' },
+                    { name: 'CiHS — Chemistry in High School Outreach', year: 'Annual' },
+                    { name: 'Resonance — Departmental Festival', year: 'Annual' },
+                  ].map((conf, i) => (
+                    <div key={i} className="flex items-center justify-between text-sm">
+                      <span className="text-[#555]">{conf.name}</span>
+                      <span className="text-[10px] font-bold text-[#999] bg-[#faf8f4] px-2 py-0.5 rounded">{conf.year}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </FadeIn>
           </div>
