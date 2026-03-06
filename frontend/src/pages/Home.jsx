@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { BookOpen, FlaskConical, Users, Globe, ArrowRight, Megaphone, Layers } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 
 // --- Shared Animation Variants ---
 const slowReveal = {
@@ -37,7 +38,9 @@ const ANNOUNCEMENTS = [
 ];
 
 // --- Interactive Spotlight Card for Core Domains ---
-const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
+const DomainCard = ({ icon: Icon, title, description, linkText, linkTo, useHoverButton = false }) => {
+  const divRef = useRef(null);
+  const navigate = useNavigate();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -51,12 +54,11 @@ const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
     <motion.div
       variants={slowReveal}
       onMouseMove={handleMouseMove}
-      // ENHANCED SHADOW: Added shadow-xl shadow-slate-200/60 for a deep, floating base shadow
-      className="group cursor-default bg-white/80 backdrop-blur-2xl p-8 border border-slate-200/60 shadow-xl shadow-slate-200/60 transition-all duration-300 flex flex-col h-full rounded-3xl relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(180,83,9,0.15)] hover:border-orange-200"
+      className="group/card cursor-default bg-white/80 backdrop-blur-2xl p-8 border border-slate-200/60 shadow-xl shadow-slate-200/60 transition-all duration-300 flex flex-col h-full rounded-3xl relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(180,83,9,0.15)] hover:border-orange-200"
     >
       {/* Spotlight Hover Glow */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-0"
+        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-300 group-hover/card:opacity-100 z-0"
         style={{
           background: useMotionTemplate`
             radial-gradient(
@@ -70,14 +72,25 @@ const DomainCard = ({ icon: Icon, title, description, linkText, linkTo }) => {
 
       {/* Card Content */}
       <div className="relative z-10 flex flex-col h-full">
-        <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-50 text-slate-400 group-hover:bg-orange-50 group-hover:text-[#b45309] transition-all duration-300 group-hover:scale-110 origin-left border border-slate-100 group-hover:border-orange-100 shadow-sm">
+        <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-50 text-slate-400 group-hover/card:bg-orange-50 group-hover/card:text-[#b45309] transition-all duration-300 group-hover/card:scale-110 origin-left border border-slate-100 group-hover/card:border-orange-100 shadow-sm">
           <Icon size={26} strokeWidth={1.5} />
         </div>
         <h3 className="text-xl font-bold text-[#1f2937] mb-3">{title}</h3>
         <p className="text-[15px] text-[#4b5563] leading-relaxed font-medium mb-8">{description}</p>
-        <Link to={linkTo} className="mt-auto inline-flex items-center gap-2 font-bold text-[14px] text-[#b45309] hover:text-[#1f2937] transition-colors w-max">
-          {linkText} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-        </Link>
+
+        {useHoverButton ? (
+          <div className="mt-auto">
+            <InteractiveHoverButton
+              text={linkText}
+              onClick={() => navigate(linkTo)}
+              className="w-44 border-[#b45309]/30 text-[#b45309] text-[14px] font-bold"
+            />
+          </div>
+        ) : (
+          <Link to={linkTo} className="mt-auto inline-flex items-center gap-2 font-bold text-[14px] text-[#b45309] hover:text-[#1f2937] transition-colors w-max">
+            {linkText} <ArrowRight size={16} className="group-hover/card:translate-x-1 transition-transform" />
+          </Link>
+        )}
       </div>
     </motion.div>
   );
@@ -269,6 +282,7 @@ const Home = () => {
                     description="State-of-the-art facilities ranging from theoretical catalysis to advanced materials and energy storage."
                     linkText="Explore Research"
                     linkTo="/research"
+                    useHoverButton={true}
                   />
                   <DomainCard
                     icon={Users}

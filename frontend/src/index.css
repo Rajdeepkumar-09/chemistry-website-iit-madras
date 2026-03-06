@@ -9,6 +9,11 @@
   --color-text-secondary: #4b5563;
   --color-accent-amber: #b45309;
   --color-border-subtle: #e5e7eb;
+
+  /* shadcn-compatible tokens for InteractiveHoverButton */
+  --color-background: #ffffff;
+  --color-primary: #b45309;
+  --color-primary-foreground: #ffffff;
 }
 
 /* Global Strict Rules for Scrollbar Physics & Baseline */
