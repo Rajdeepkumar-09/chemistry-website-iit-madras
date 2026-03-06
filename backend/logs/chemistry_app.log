@@ -244,3 +244,12 @@
 2026-03-07 00:17:53,606 - INFO - Chemistry Department Server initialized successfully.
 2026-03-07 00:19:25,504 - INFO - Chemistry Department Server initialized successfully.
 2026-03-07 00:20:32,314 - INFO - Chemistry Department Server initialized successfully.
+2026-03-07 00:21:39,119 - INFO - Chemistry Department Server initialized successfully.
+2026-03-07 00:21:50,310 - INFO - Successful login for admin: admin@smail.iitm.ac.in
+2026-03-07 00:22:19,389 - INFO - Successfully registered new student: cy25b009@smail.iitm.ac.in
+2026-03-07 00:22:26,977 - INFO - Admin toggled User ID 2 status to Suspended.
+2026-03-07 00:22:28,385 - INFO - Admin toggled User ID 2 status to Active.
+2026-03-07 00:22:31,053 - INFO - Admin toggled User ID 2 status to Suspended.
+2026-03-07 00:22:54,049 - WARNING - Blocked login attempt for suspended user: cy25b009@smail.iitm.ac.in
+2026-03-07 00:23:16,194 - INFO - Successful login for admin: admin@smail.iitm.ac.in
+2026-03-07 00:23:29,922 - INFO - Admin toggled User ID 2 status to Active.

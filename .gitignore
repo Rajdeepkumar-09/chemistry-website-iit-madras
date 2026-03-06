@@ -22,3 +22,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+instance/
+*.db
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+.env
+
+# Misc
+.vscode/
+.DS_Store
