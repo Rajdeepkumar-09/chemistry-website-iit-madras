@@ -39,7 +39,7 @@ const NAVIGATION_DATA = [
     title: 'People',
     path: '/people',
     groups: [
-      { heading: 'Faculty', links: [{ label: 'Inorganic', to: '/people/faculty/inorganic' }, { label: 'Organic', to: '/people/faculty/organic' }, { label: 'Physical', to: '/people/faculty/physical' }, { label: 'Emeritus', to: '/people/faculty/emeritus' }, { label: 'Visiting', to: '/people/faculty/visiting' }] },
+      { heading: 'Faculty', links: [{ label: 'Faculty Directory', to: '/people' }] },
       { heading: 'Staff & Postdocs', links: [{ label: 'Staff', to: '/people/staff' }, { label: 'Postdocs', to: '/people/postdocs' }] },
       { heading: 'Students', links: [{ label: 'BS Students', to: '/people/students/bs' }, { label: 'MSc Students', to: '/people/students/msc' }, { label: 'PhD Students', to: '/people/students/phd' }, { label: 'Project Students', to: '/people/students/project' }] },
       { heading: 'Alumni', links: [{ label: 'Alumni Directory', to: '/people/alumni' }] }

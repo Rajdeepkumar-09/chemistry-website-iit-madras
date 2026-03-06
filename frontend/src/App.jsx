@@ -9,6 +9,8 @@ import Achievements from './pages/Achievements';
 import Rankings from './pages/Rankings';
 import FacilitiesEquipment from './pages/FacilitiesEquipment';
 import History from './pages/History';
+import AcademicCalendar from './pages/AcademicCalendar';
+import TimeTable from './pages/TimeTable';
 import Calendar from './pages/Calendar';
 import Academics from './pages/Academics';
 import Research from './pages/Research';
@@ -40,8 +42,8 @@ function App() {
 
           {/* Academics Routes */}
           <Route path="academics" element={<Academics />} />
-          <Route path="academics/calendar" element={<Calendar />} />
-          <Route path="academics/timetable" element={<Calendar />} />
+          <Route path="academics/calendar" element={<AcademicCalendar />} />
+          <Route path="academics/timetable" element={<TimeTable />} />
 
           {/* Research Routes */}
           <Route path="research" element={<Research />} />

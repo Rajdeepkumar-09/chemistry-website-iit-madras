@@ -83,7 +83,7 @@ const DomainCard = ({ icon: Icon, title, description, linkText, linkTo, useHover
             <InteractiveHoverButton
               text={linkText}
               onClick={() => navigate(linkTo)}
-              className="w-44 border-[#b45309]/30 text-[#b45309] text-[14px] font-bold"
+              className="text-[14px]"
             />
           </div>
         ) : (
@@ -275,6 +275,7 @@ const Home = () => {
                     description="BS, Dual Degree, MSc, and PhD programs designed to forge the next generation of scientists."
                     linkText="View Curriculum"
                     linkTo="/academics"
+                    useHoverButton={true}
                   />
                   <DomainCard
                     icon={FlaskConical}
@@ -290,6 +291,7 @@ const Home = () => {
                     description="A diverse and vibrant community of globally recognized faculty, brilliant students, and notable alumni."
                     linkText="Meet the Team"
                     linkTo="/people"
+                    useHoverButton={true}
                   />
                   <DomainCard
                     icon={Globe}
@@ -297,6 +299,7 @@ const Home = () => {
                     description="Fostering strong partnerships with national and international universities and industry alliances."
                     linkText="View Partnerships"
                     linkTo="/collaborations/international"
+                    useHoverButton={true}
                   />
                 </div>
               </div>
