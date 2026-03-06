@@ -12,8 +12,8 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    # Uses your local PostgreSQL database
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    # The 'or' guarantees that if DATABASE_URL is missing or blank, it uses SQLite
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///chemistry_local.db'
 
 class ProductionConfig(Config):
     DEBUG = False

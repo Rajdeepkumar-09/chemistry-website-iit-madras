@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Navigation from './Navigation';
+import Navbar from './Navigation';;
 import logo from '../assets/logo/IITM_LOGO.png';
 
 const Layout = () => {
@@ -7,7 +7,7 @@ const Layout = () => {
     <div className="min-h-screen flex flex-col overflow-x-hidden bg-[#f5f6f8] text-[#1f2937] font-sans selection:bg-[#b45309] selection:text-white">
       
       {/* Global Navigation Bar */}
-      <Navigation />
+      <Navbar />
       
       {/* Main Content Area */}
       <main className="flex-grow w-full">
